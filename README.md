@@ -1,22 +1,54 @@
 # Slack Mass Join/Leave
 
-To join several Slack channels at once:
+## Usage
 
+Before you can start, set up the `SLACK_TOKEN` environment variable with a valid [Slack token](https://api.slack.com/docs/oauth-test-tokens) as value and create an alias `slackutil` as you can see below:
 
 ```nohighlight
 export SLACK_TOKEN=<mytoken>
-
-docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil join --include "support-.*" --exclude "support-meta"
+alias slackutil="docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil"
 ```
 
-Leaving several channels at once works the same way, using the `leave` keyword:
+### Joining channels
+
+To join all channels available to you:
 
 ```nohighlight
-docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil leave --include "support-.*" --exclude "support-meta"
+slackutil join
 ```
+
+To join all channels with names starting with `ux-`:
+
+```nohighlight
+slackutil join --include "ux-.*"
+```
+
+To join all channels with names matching `ux-.*`, but not matching `ux-noise`:
+
+```nohighlight
+slackutil join --include "ux-.*" --exclude "ux-noise"
+```
+
+You can use as many `--include` and `--exclude` patterns as you want to.
+
+Pro tip: **Test your patterns** as described below before actually joining channels.
+
+### Leaving channels
+
+The `leave` command works the same way as the `join` command.
+
+To leave all channels containing `jokes` in their name, except for the one named `actually-funny-jokes`:
+
+```nohighlight
+slackutil leave --include ".*jokes.*" --exclude "actually-funny-jokes"
+```
+
+### Testing your patterns
 
 To just test your include and exclude patterns, use `list` instead:
 
 ```nohighlight
-docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil list --include "a.*" --exclude "abc.*"
+slackutil list --include "a.*" --exclude "abc.*"
 ```
+
+This way, the matching channel names will be printed. Nothing else.
