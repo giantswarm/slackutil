@@ -6,7 +6,18 @@ Before you can start, set up the `SLACK_TOKEN` environment variable with a valid
 
 ```nohighlight
 export SLACK_TOKEN=<mytoken>
+```
+
+Create a `slackutil` alias for your convenience:
+
+```nohighlight
 alias slackutil="docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil"
+```
+
+General command syntax:
+
+```nohighlight
+slackutil <join|leave|list> [--include <include-pattern> [--exclude <exclude-pattern>]]
 ```
 
 ### Joining channels
