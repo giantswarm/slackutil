@@ -1,3 +1,5 @@
+[![](https://img.shields.io/docker/automated/giantswarm/slackutil.svg)](https://hub.docker.com/r/giantswarm/slackutil/)
+
 # Slack Mass Join/Leave
 
 ## Usage
