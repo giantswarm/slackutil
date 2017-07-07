@@ -13,7 +13,7 @@ export SLACK_TOKEN=<mytoken>
 Create a `slackutil` alias for your convenience:
 
 ```nohighlight
-alias slackutil="docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil"
+alias slackutil="docker run --rm -ti -e SLACK_TOKEN giantswarm/slackutil"
 ```
 
 General command syntax:
