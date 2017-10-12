@@ -26,12 +26,24 @@ def leave_channel(channel_id):
     r = requests.get(url, params=params)
     r.raise_for_status()
 
+def star_channel(channel_id):
+    url = BASE_URL + "stars.add"
+    params = {"token": TOKEN, "channel": channel_id}
+    r = requests.get(url, params=params)
+    r.raise_for_status()
+
+def unstar_channel(channel_id):
+    url = BASE_URL + "stars.remove"
+    params = {"token": TOKEN, "channel": channel_id}
+    r = requests.get(url, params=params)
+    r.raise_for_status()
+
 
 if __name__ == "__main__":
     TOKEN = os.getenv("SLACK_TOKEN")
 
     parser = argparse.ArgumentParser(description='Do things with Slack')
-    parser.add_argument('command', metavar='command', help='Can be "join", "leave", or "list".')
+    parser.add_argument('command', metavar='command', help='Can be "join", "leave", "star", "unstar", or "list".')
     parser.add_argument("--include", dest="include_pattern", nargs="*",
                     help='Regex pattern to use for matching channels to work on')
     parser.add_argument("--exclude", dest="exclude_pattern", nargs="*",
@@ -76,3 +88,9 @@ if __name__ == "__main__":
             join_channel(channel["name"])
         elif args.command == "list":
             print(channel["name"])
+        elif args.command == "star":
+            print("Starring %s" % channel["name"])
+            star_channel(channel["id"])
+        elif args.command == "unstar":
+            print("Unstarring %s" % channel["name"])
+            unstar_channel(channel["id"])

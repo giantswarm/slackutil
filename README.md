@@ -1,6 +1,6 @@
-[![](https://img.shields.io/docker/automated/giantswarm/slackutil.svg)](https://hub.docker.com/r/giantswarm/slackutil/)
+# Slack Mass Join/Leave/Star tool
 
-# Slack Mass Join/Leave
+This little CLI helps you to join, leave, add/remove stars from/to a bunch of channels based on regex patterns.
 
 ## Usage
 
@@ -8,18 +8,7 @@ Before you can start, set up the `SLACK_TOKEN` environment variable with a valid
 
 ```nohighlight
 export SLACK_TOKEN=<mytoken>
-```
-
-Create a `slackutil` alias for your convenience:
-
-```nohighlight
-alias slackutil="docker run --rm -ti -e SLACK_TOKEN giantswarm/slackutil"
-```
-
-General command syntax:
-
-```nohighlight
-slackutil <join|leave|list> [--include <include-pattern> [--exclude <exclude-pattern>]]
+alias slackutil="docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil"
 ```
 
 ### Joining channels
@@ -54,6 +43,16 @@ To leave all channels containing `jokes` in their name, except for the one named
 
 ```nohighlight
 slackutil leave --include ".*jokes.*" --exclude "actually-funny-jokes"
+```
+
+### Adding stars to/from channels
+
+```nohighlight
+slackutil star --include "cool-.*"
+```
+
+```nohighlight
+slackutil unstar --include "uncool-.*"
 ```
 
 ### Testing your patterns
