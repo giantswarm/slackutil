@@ -55,6 +55,21 @@ slackutil star --include "cool-.*"
 slackutil unstar --include "uncool-.*"
 ```
 
+### Muting/unmuting channels
+
+To mute all support channels:
+
+```nohighlight
+slackutil mute --include "support-.*"
+```
+
+To unmute all support channels:
+
+```nohighlight
+slackutil unmute --include "support-.*"
+```
+
+
 ### Testing your patterns
 
 To just test your include and exclude patterns, use `list` instead:
