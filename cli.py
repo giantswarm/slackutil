@@ -3,6 +3,7 @@ import os
 import sys
 import requests
 import re
+import json
 
 TOKEN = None
 BASE_URL = "https://slack.com/api/"
@@ -38,12 +39,26 @@ def unstar_channel(channel_id):
     r = requests.get(url, params=params)
     r.raise_for_status()
 
+def get_muted_channels():
+    url = BASE_URL + "users.prefs.get"
+    params = {"token": TOKEN}
+    r = requests.get(url, params=params)
+    r.raise_for_status()
+    data = json.loads(r.text)
+    return data["prefs"]["muted_channels"]
+
+def remute_channel(channel_id):
+    url = BASE_URL + "chat.command"
+    params = {"token": TOKEN, "channel": channel_id, "command": "/mute"}
+    r = requests.get(url, params=params)
+    r.raise_for_status()
+    
 
 if __name__ == "__main__":
     TOKEN = os.getenv("SLACK_TOKEN")
 
     parser = argparse.ArgumentParser(description='Do things with Slack')
-    parser.add_argument('command', metavar='command', help='Can be "join", "leave", "star", "unstar", or "list".')
+    parser.add_argument('command', metavar='command', help='Can be "join", "leave", "star", "unstar", "mute", "unmute" or "list".')
     parser.add_argument("--include", dest="include_pattern", nargs="*",
                     help='Regex pattern to use for matching channels to work on')
     parser.add_argument("--exclude", dest="exclude_pattern", nargs="*",
@@ -56,6 +71,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     result_channels = []
+    muted_channels = []
 
     for channel in get_channels():
         # make sure the item matches all include patterns
@@ -94,3 +110,20 @@ if __name__ == "__main__":
         elif args.command == "unstar":
             print("Unstarring %s" % channel["name"])
             unstar_channel(channel["id"])
+        elif args.command == "mute":
+            if not muted_channels:
+                muted_channels=get_muted_channels()
+            if channel["id"] not in muted_channels:
+                print("Muting %s" % channel["name"])
+                remute_channel(channel["id"])
+            else:
+                print("Channel %s already muted" % channel["name"])
+
+        elif args.command == "unmute":
+            if not muted_channels:
+                muted_channels=get_muted_channels()
+            if channel["id"] in muted_channels:
+                print("Unmuting %s" % channel["name"])
+                remute_channel(channel["id"])
+            else:
+                print("Channel %s already unmuted" % channel["name"])
