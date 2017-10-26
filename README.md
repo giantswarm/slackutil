@@ -1,4 +1,4 @@
-# Slack Mass Join/Leave/Star tool
+# Slack Mass Join/Leave/Star/Mute tool
 
 This little CLI helps you to join, leave, add/remove stars from/to a bunch of channels based on regex patterns.
 
