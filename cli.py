@@ -52,7 +52,14 @@ def remute_channel(channel_id):
     params = {"token": TOKEN, "channel": channel_id, "command": "/mute"}
     r = requests.get(url, params=params)
     r.raise_for_status()
-    
+
+def auth_test():
+    url = BASE_URL + "auth.test"
+    params = {"token": TOKEN}
+    r = requests.get(url, params=params)
+    r.raise_for_status()
+    return r.json()["ok"]
+        
 
 if __name__ == "__main__":
     TOKEN = os.getenv("SLACK_TOKEN")
@@ -66,6 +73,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if TOKEN is None:
+        sys.stderr.write("Please set the SLACK_TOKEN environment variable.\n")
+        sys.stderr.write("Go to https://api.slack.com/docs/oauth-test-tokens to create a new token.\n\n")
+        sys.exit(1)
+    
+    if auth_test() is False:
+        sys.stderr.write("Authentication Failed.\n")
         sys.stderr.write("Please set the SLACK_TOKEN environment variable.\n")
         sys.stderr.write("Go to https://api.slack.com/docs/oauth-test-tokens to create a new token.\n\n")
         sys.exit(1)
