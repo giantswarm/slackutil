@@ -72,7 +72,7 @@ if __name__ == "__main__":
                     help='Regex pattern to use for matching channels to exclude')
     args = parser.parse_args()
 
-    if TOKEN is None:
+    if TOKEN is None or TOKEN is "":
         sys.stderr.write("Please set the SLACK_TOKEN environment variable.\n")
         sys.stderr.write("Go to https://api.slack.com/docs/oauth-test-tokens to create a new token.\n\n")
         sys.exit(1)
