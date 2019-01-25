@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/giantswarm/slackutil/status "Docker Repository on Quay")](https://quay.io/repository/giantswarm/slackutil)
+
 # Slack Mass Join/Leave/Star/Mute tool
 
 This little CLI helps you to join, leave, add/remove stars from/to a bunch of channels based on regex patterns.
