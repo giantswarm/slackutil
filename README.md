@@ -10,7 +10,7 @@ Before you can start, set up the `SLACK_TOKEN` environment variable with a valid
 
 ```nohighlight
 export SLACK_TOKEN=<mytoken>
-alias slackutil="docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} giantswarm/slackutil"
+alias slackutil="docker run --rm -ti -e SLACK_TOKEN=${SLACK_TOKEN} quay.io/giantswarm/slackutil"
 ```
 
 ### Joining channels
