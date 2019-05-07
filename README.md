@@ -1,3 +1,5 @@
+![Repo image](https://repository-images.githubusercontent.com/79463652/43421b80-70dd-11e9-8775-241e21905fcc)
+
 [![Docker Repository on Quay](https://quay.io/repository/giantswarm/slackutil/status "Docker Repository on Quay")](https://quay.io/repository/giantswarm/slackutil)
 
 # Slack Mass Join/Leave/Star/Mute tool
